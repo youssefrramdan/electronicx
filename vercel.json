@@ -25,10 +25,5 @@
   ],
   "env": {
     "CI": "false"
-  },
-  "functions": {
-    "app/api/*.js": {
-      "includeFiles": "**"
-    }
   }
 }
