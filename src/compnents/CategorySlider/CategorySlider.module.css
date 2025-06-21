@@ -1,0 +1,25 @@
+.custom-slider {
+    position: relative;
+  }
+  
+  .slider-item {
+    position: relative;
+    width: 100%;
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+  
+  /* Style the second image to appear above the first */
+  .slider-item:nth-child(2) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Ensure it's displayed above the first image */
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 100%); /* Clip to show only the top half */
+    img {
+      height: 50%; /* Adjust the height as needed */
+    }
+  }
+  

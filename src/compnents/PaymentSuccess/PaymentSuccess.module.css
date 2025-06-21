@@ -1,0 +1,145 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.successCard,
+.errorCard {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+.checkIcon,
+.errorIcon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.successCard h1 {
+  color: #2ecc71;
+  margin-bottom: 15px;
+  font-size: 2.5rem;
+}
+
+.errorCard h1 {
+  color: #e74c3c;
+  margin-bottom: 15px;
+  font-size: 2.5rem;
+}
+
+.successCard p,
+.errorCard p {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.orderInfo {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  border-left: 4px solid #2ecc71;
+}
+
+.orderInfo p {
+  margin: 0;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.viewOrdersBtn,
+.backToCartBtn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.viewOrdersBtn {
+  background: #2ecc71;
+  color: white;
+}
+
+.viewOrdersBtn:hover {
+  background: #27ae60;
+  transform: translateY(-2px);
+}
+
+.backToCartBtn {
+  background: #3498db;
+  color: white;
+}
+
+.backToCartBtn:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+.autoRedirect {
+  font-size: 0.9rem;
+  color: #888;
+  font-style: italic;
+  margin-top: 20px;
+}
+
+.message {
+  text-align: center;
+  margin-top: 20px;
+  color: white;
+}
+
+.message h2 {
+  margin-bottom: 10px;
+}
+
+.message p {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .successCard,
+  .errorCard {
+    padding: 30px 20px;
+  }
+
+  .successCard h1,
+  .errorCard h1 {
+    font-size: 2rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .viewOrdersBtn,
+  .backToCartBtn {
+    width: 100%;
+  }
+}

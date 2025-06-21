@@ -1,0 +1,142 @@
+:root {
+  --main-color: #0aad0a;
+}
+
+.box {
+  border: 1px solid black;
+  /* justify-content: space-between; */
+  /* transition: box-shadow .3s; */
+
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  /* float: left; */
+}
+
+.roww {
+  transition: 0.5s;
+}
+.roww:hover {
+  box-shadow: 0 0 11px rgba(43, 132, 53, 0.797);
+  border: none;
+  /* color: white !important; */
+}
+
+.overlay {
+  height: 100vh;
+  z-index: 11111;
+  /* background-color:rgba(152, 13, 13, 0.3) */
+}
+.center {
+  margin-top: 50%;
+}
+.text {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.categoriesHeader {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.categoriesHeader h2 {
+  color: #404553;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.categoriesHeader p {
+  color: #7e859b;
+  font-size: 16px;
+}
+
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.categoryCard {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.categoryCard:hover {
+  border-color: #feee00;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.imageWrapper {
+  position: relative;
+  padding-top: 75%; /* 4:3 Aspect Ratio */
+  overflow: hidden;
+  background: #f7f8fa;
+}
+
+.imageWrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.categoryCard:hover .imageWrapper img {
+  transform: scale(1.05);
+}
+
+.categoryInfo {
+  padding: 20px;
+  text-align: center;
+}
+
+.categoryInfo h3 {
+  color: #404553;
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.categoryInfo span {
+  color: #7e859b;
+  font-size: 14px;
+}
+
+.error {
+  text-align: center;
+  color: #dc3545;
+  padding: 40px;
+  font-size: 18px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .categoriesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .categoriesHeader h2 {
+    font-size: 28px;
+  }
+
+  .categoryInfo h3 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categoriesGrid {
+    grid-template-columns: 1fr;
+  }
+}

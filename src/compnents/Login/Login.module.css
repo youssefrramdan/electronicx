@@ -1,0 +1,192 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+.loginContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f8fa;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.loginBox {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.loginBox::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, #feee00, #ffba08);
+}
+
+.loginHeader {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.loginHeader h2 {
+  color: #404553;
+  margin-bottom: 12px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.loginHeader p {
+  color: #7e859b;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  color: #404553;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.formGroup label i {
+  margin-right: 8px;
+  color: #feee00;
+  font-size: 16px;
+}
+
+.formControl {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e9eaef;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: #404553;
+  background-color: #ffffff;
+}
+
+.formControl:hover {
+  border-color: #feee00;
+}
+
+.formControl:focus {
+  border-color: #feee00;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(254, 238, 0, 0.1);
+}
+
+.errorMessage {
+  color: #ff424f;
+  font-size: 13px;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.errorMessage::before {
+  content: "⚠️";
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 16px;
+  background: #feee00;
+  color: #404553;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.loginButton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.loginButton:hover:not(:disabled)::after {
+  transform: translateX(100%);
+}
+
+.loginButton:hover:not(:disabled) {
+  background: #ffba08;
+  transform: translateY(-2px);
+}
+
+.loginButton:disabled {
+  background: #e9eaef;
+  color: #7e859b;
+  cursor: not-allowed;
+}
+
+.registerLink {
+  text-align: center;
+  margin-top: 24px;
+  color: #7e859b;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.registerLink a {
+  color: #404553;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+  position: relative;
+}
+
+.registerLink a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #feee00;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.registerLink a:hover {
+  color: #404553;
+}
+
+.registerLink a:hover::after {
+  transform: scaleX(1);
+}
