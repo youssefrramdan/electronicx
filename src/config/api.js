@@ -1,7 +1,8 @@
 // API Configuration
 const API_CONFIG = {
   BASE_URL:
-    process.env.REACT_APP_API_BASE_URL || "http://localhost:8000/api/v1",
+    "https://tech-shop-api-e0bd81e562d4.herokuapp.com" ||
+    "http://localhost:8000/api/v1",
   TIMEOUT: 10000,
 };
 
