@@ -8,19 +8,17 @@ export default function UserContextProvider(props) {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    // Load token from localStorage when app starts
+    // Load token and user data from localStorage when app starts
     const token = localStorage.getItem("userToken");
-    if (token) {
+    const storedUserData = localStorage.getItem("userData");
+
+    if (token && storedUserData) {
       try {
         const decoded = jwtDecode(token);
         // Check if token is not expired
         if (decoded.exp * 1000 > Date.now()) {
           setUserToken(token);
-          // Try to get user data from localStorage or decode from token
-          const storedUserData = localStorage.getItem("userData");
-          if (storedUserData) {
-            setUserData(JSON.parse(storedUserData));
-          }
+          setUserData(JSON.parse(storedUserData));
         } else {
           // Token expired, remove it
           localStorage.removeItem("userToken");
@@ -49,18 +47,16 @@ export default function UserContextProvider(props) {
   };
 
   return (
-    <>
-      <UserContext.Provider
-        value={{
-          userToken,
-          userData,
-          setUserToken,
-          setUserLogin,
-          logout,
-        }}
-      >
-        {props.children}
-      </UserContext.Provider>
-    </>
+    <UserContext.Provider
+      value={{
+        userToken,
+        userData,
+        setUserToken,
+        setUserLogin,
+        logout,
+      }}
+    >
+      {props.children}
+    </UserContext.Provider>
   );
 }

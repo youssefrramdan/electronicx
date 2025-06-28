@@ -39,7 +39,13 @@ export default function Login() {
             zIndex: 9999,
           },
         });
-        navigate("/");
+
+        // Check if user is admin and redirect accordingly
+        if (data.user.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }
     } catch (error) {
       console.log(error);

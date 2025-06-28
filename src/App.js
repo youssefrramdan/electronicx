@@ -27,6 +27,13 @@ import Allorders from "./compnents/Allorders/Allorders";
 import SearchResults from "./compnents/SearchResults/SearchResults";
 import PaymentSuccess from "./compnents/PaymentSuccess/PaymentSuccess";
 import axios from "axios";
+import AdminDashboard from "./compnents/AdminDashboard/AdminDashboard";
+import DashboardOverview from "./compnents/AdminDashboard/DashboardOverview";
+import AdminProducts from "./compnents/AdminDashboard/AdminProducts";
+import AdminCategories from "./compnents/AdminDashboard/AdminCategories";
+import AdminOrders from "./compnents/AdminDashboard/AdminOrders";
+import AdminUsers from "./compnents/AdminDashboard/AdminUsers";
+import { Navigate } from "react-router-dom";
 
 // Set up axios interceptor to automatically add authorization header
 axios.interceptors.request.use((config) => {
@@ -36,6 +43,28 @@ axios.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Admin Route Protection
+const AdminRoute = ({ children }) => {
+  const { userData } = useContext(UserContext);
+  const storedUserData = localStorage.getItem("userData");
+  const parsedUserData = storedUserData ? JSON.parse(storedUserData) : null;
+
+  // Check both context and localStorage
+  const isAdmin =
+    userData?.role === "admin" || parsedUserData?.role === "admin";
+  const isAuthenticated = localStorage.getItem("userToken") !== null;
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  if (!isAdmin) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
+};
 
 let router = createBrowserRouter([
   {
@@ -128,6 +157,36 @@ let router = createBrowserRouter([
       { path: "*", element: <Notfound /> },
     ],
   },
+  {
+    path: "/admin",
+    element: (
+      <AdminRoute>
+        <AdminDashboard />
+      </AdminRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DashboardOverview />,
+      },
+      {
+        path: "products",
+        element: <AdminProducts />,
+      },
+      {
+        path: "categories",
+        element: <AdminCategories />,
+      },
+      {
+        path: "orders",
+        element: <AdminOrders />,
+      },
+      {
+        path: "users",
+        element: <AdminUsers />,
+      },
+    ],
+  },
 ]);
 
 function App() {
@@ -153,7 +212,13 @@ function App() {
   }
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
+      <CounterContextProvider>
+        <CartContextProvider>
+          <Toaster />
+          <RouterProvider router={router} />
+          <ToastContainer />
+        </CartContextProvider>
+      </CounterContextProvider>
     </>
   );
 }
