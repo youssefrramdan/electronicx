@@ -58,7 +58,9 @@ export default function ProductDetails() {
   };
 
   const handleWishlistToggle = async () => {
-    await toggleWishlist(id);
+    if (id) {
+      await toggleWishlist(id);
+    }
   };
 
   const mainSliderSettings = {
@@ -112,7 +114,9 @@ export default function ProductDetails() {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>{product.name} - ElectronixHub</title>
+        <title>
+          {product.title || product.name || "Product Details"} - ElectronixHub
+        </title>
       </Helmet>
 
       <div className={Style.productDetails}>
@@ -128,7 +132,9 @@ export default function ProductDetails() {
                     <div key={index} className={Style.slideImage}>
                       <img
                         src={image}
-                        alt={`${product.name} - Image ${index + 1}`}
+                        alt={`${product.title || product.name} - Image ${
+                          index + 1
+                        }`}
                       />
                     </div>
                   ))}
@@ -148,7 +154,9 @@ export default function ProductDetails() {
                     >
                       <img
                         src={image}
-                        alt={`${product.name} - Thumbnail ${index + 1}`}
+                        alt={`${product.title || product.name} - Thumbnail ${
+                          index + 1
+                        }`}
                       />
                     </div>
                   ))}
@@ -157,7 +165,7 @@ export default function ProductDetails() {
             </div>
 
             <div className={Style.infoSection}>
-              <h1 className={Style.title}>{product.name}</h1>
+              <h1 className={Style.title}>{product.title || product.name}</h1>
 
               <div className={Style.priceRating}>
                 <div className={Style.priceInfo}>
@@ -201,6 +209,52 @@ export default function ProductDetails() {
                 <p>{product.description}</p>
               </div>
 
+              {/* Rental Section */}
+              {product.isRentable && (
+                <div className={Style.rentalSection}>
+                  <h2 className={Style.rentalTitle}>
+                    <i className="fas fa-calendar-alt"></i>
+                    Available for Rent
+                  </h2>
+                  <div className={Style.rentalInfo}>
+                    <div className={Style.rentalPrice}>
+                      <span className={Style.label}>Daily Rate:</span>
+                      <span className={Style.value}>
+                        ${product.rentalPricePerDay}/day
+                      </span>
+                    </div>
+                    {product.rentalDeposit && (
+                      <div className={Style.rentalDeposit}>
+                        <span className={Style.label}>Security Deposit:</span>
+                        <span className={Style.value}>
+                          ${product.rentalDeposit}
+                        </span>
+                      </div>
+                    )}
+                    <div className={Style.rentalStock}>
+                      <span className={Style.label}>Available Units:</span>
+                      <span className={Style.value}>
+                        {product.rentalStock || product.stock} units
+                      </span>
+                    </div>
+                  </div>
+                  <div className={Style.rentalFeatures}>
+                    <div className={Style.feature}>
+                      <i className="fas fa-check-circle"></i>
+                      <span>Flexible rental periods</span>
+                    </div>
+                    <div className={Style.feature}>
+                      <i className="fas fa-shield-alt"></i>
+                      <span>Damage protection included</span>
+                    </div>
+                    <div className={Style.feature}>
+                      <i className="fas fa-truck"></i>
+                      <span>Delivery & pickup available</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className={Style.actionButtons}>
                 <button
                   className={Style.addToCartBtn}
@@ -211,19 +265,33 @@ export default function ProductDetails() {
                   {product.stock > 0 ? "Add to Cart" : "Out of Stock"}
                 </button>
 
+                {/* Rent Button - only show if product is rentable */}
+                {product.isRentable && (
+                  <button
+                    className={Style.rentBtn}
+                    onClick={() => alert("Rental feature coming soon!")}
+                    disabled={!product.rentalStock && !product.stock}
+                  >
+                    <i className="fas fa-calendar-check"></i>
+                    {product.rentalStock || product.stock > 0
+                      ? "Rent Now"
+                      : "Not Available"}
+                  </button>
+                )}
+
                 <button
                   className={`${Style.wishlistBtn} ${
-                    isInWishlist(id) ? Style.inWishlist : ""
+                    id && isInWishlist(id) ? Style.inWishlist : ""
                   }`}
                   onClick={handleWishlistToggle}
                   title={
-                    isInWishlist(id)
+                    id && isInWishlist(id)
                       ? "Remove from Wishlist"
                       : "Add to Wishlist"
                   }
                 >
                   <i className="fas fa-heart"></i>
-                  {isInWishlist(id) ? "In Wishlist" : "Add to Wishlist"}
+                  {id && isInWishlist(id) ? "In Wishlist" : "Add to Wishlist"}
                 </button>
               </div>
             </div>

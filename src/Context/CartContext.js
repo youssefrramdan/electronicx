@@ -5,8 +5,7 @@ import toast from "react-hot-toast";
 
 export let CartContext = createContext();
 
-const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:8000/api/v1";
+const API_BASE_URL = "https://tech-shop-api-e0bd81e562d4.herokuapp.com/api/v1";
 
 export default function CartContextProvider(props) {
   const [cartCount, setCartCount] = useState(0);
@@ -57,11 +56,19 @@ export default function CartContextProvider(props) {
       });
 
       if (data.status === "success") {
-        setCartItems(data.data.cartItems || []);
-        setCartCount(data.data.cartItems?.length || 0);
+        const cartData = data.data.cartItems || [];
+        // Filter out any invalid items
+        const validCartItems = cartData.filter(
+          (item) => item && item.product && item.product._id
+        );
+        setCartItems(validCartItems);
+        setCartCount(validCartItems.length);
         setCartId(data.data._id);
         setCartTotal(data.data.totalCartPrice || 0);
-        return { success: true, data: data.data };
+        return {
+          success: true,
+          data: { ...data.data, cartItems: validCartItems },
+        };
       }
     } catch (error) {
       if (error.response?.status === 404) {
@@ -194,12 +201,18 @@ export default function CartContextProvider(props) {
 
   // Check if product is in cart
   const isInCart = (productId) => {
-    return cartItems.some((item) => item.product._id === productId);
+    if (!cartItems || !Array.isArray(cartItems)) return false;
+    return cartItems.some(
+      (item) => item && item.product && item.product._id === productId
+    );
   };
 
   // Get cart item quantity for a specific product
   const getCartItemQuantity = (productId) => {
-    const item = cartItems.find((item) => item.product._id === productId);
+    if (!cartItems || !Array.isArray(cartItems)) return 0;
+    const item = cartItems.find(
+      (item) => item && item.product && item.product._id === productId
+    );
     return item ? item.quantity : 0;
   };
 
@@ -214,10 +227,16 @@ export default function CartContextProvider(props) {
 
   // Calculate cart totals
   const calculateCartTotal = () => {
+    if (!cartItems || !Array.isArray(cartItems)) return 0;
     return cartItems.reduce((total, item) => {
+      if (!item || !item.product) return total;
       const price =
-        item.product?.priceAfterDiscount || item.product?.price || item.price;
-      return total + price * item.quantity;
+        item.product?.priceAfterDiscount ||
+        item.product?.price ||
+        item.price ||
+        0;
+      const quantity = item.quantity || 0;
+      return total + price * quantity;
     }, 0);
   };
 
@@ -261,47 +280,30 @@ export default function CartContextProvider(props) {
         removeCartItem: removeFromCart,
         UpdateProductCount: updateCartItemQuantity,
 
-        // Keep existing wishlist and payment functions for now
+        // Legacy functions - disable incorrect API calls
         addToWishList: async (productId) => {
-          if (!userToken) {
-            toast.error("Please login to add items to wishlist");
-            return;
-          }
-          return axios.post(
-            `https://ecommerce.routemisr.com/api/v1/wishlist`,
-            { productId },
-            { headers: { token: userToken } }
-          );
+          console.warn("Legacy function called - use WishContext instead");
+          return { success: false, error: "Use WishContext instead" };
         },
 
         removeWishListItem: async (productId) => {
-          if (!userToken) return;
-          return axios.delete(
-            `https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`,
-            { headers: { token: userToken } }
-          );
+          console.warn("Legacy function called - use WishContext instead");
+          return { success: false, error: "Use WishContext instead" };
         },
 
         getWishlistIitem: async () => {
-          if (!userToken) return;
-          return axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
-            headers: { token: userToken },
-          });
+          console.warn("Legacy function called - use WishContext instead");
+          return { success: false, error: "Use WishContext instead" };
         },
 
         onlinePayment: async (cartId, values) => {
-          if (!userToken) return;
-          return axios.post(
-            `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:3000`,
-            { shippingAddress: values },
-            { headers: { token: userToken } }
-          );
+          console.warn("Legacy function called - use OrderContext instead");
+          return { success: false, error: "Use OrderContext instead" };
         },
 
         getOrders: async (userId) => {
-          return axios.get(
-            `https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`
-          );
+          console.warn("Legacy function called - use OrderContext instead");
+          return { success: false, error: "Use OrderContext instead" };
         },
       }}
     >

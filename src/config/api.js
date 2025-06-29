@@ -1,8 +1,6 @@
 // API Configuration
 const API_CONFIG = {
-  BASE_URL:
-    "https://tech-shop-api-e0bd81e562d4.herokuapp.com" ||
-    "http://localhost:8000/api/v1",
+  BASE_URL: "https://tech-shop-api-e0bd81e562d4.herokuapp.com/api/v1",
   TIMEOUT: 10000,
 };
 
@@ -23,7 +21,7 @@ export const API_ENDPOINTS = {
   CATEGORIES: `${API_CONFIG.BASE_URL}/categories`,
 
   // Brands
-  BRANDS: `${API_CONFIG.BASE_URL}/brand`,
+  BRANDS: `${API_CONFIG.BASE_URL}/brands`,
 
   // Cart
   CART: `${API_CONFIG.BASE_URL}/cart`,

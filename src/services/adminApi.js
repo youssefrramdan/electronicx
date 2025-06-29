@@ -1,15 +1,74 @@
 import axios from "axios";
 import { BASE_URL } from "../config";
 
+// Request throttling and caching to prevent rate limiting
+const requestCache = new Map();
+const requestQueue = [];
+const MAX_CONCURRENT_REQUESTS = 5;
+let activeRequests = 0;
+
+const throttleRequest = async (
+  requestFn,
+  cacheKey = null,
+  cacheTime = 30000
+) => {
+  // Check cache first
+  if (cacheKey && requestCache.has(cacheKey)) {
+    const cached = requestCache.get(cacheKey);
+    if (Date.now() - cached.timestamp < cacheTime) {
+      return cached.data;
+    }
+    requestCache.delete(cacheKey);
+  }
+
+  return new Promise((resolve, reject) => {
+    const processRequest = async () => {
+      if (activeRequests >= MAX_CONCURRENT_REQUESTS) {
+        // Add to queue and wait
+        requestQueue.push({ processRequest, resolve, reject });
+        return;
+      }
+
+      activeRequests++;
+      try {
+        const result = await requestFn();
+
+        // Cache the result if cacheKey provided
+        if (cacheKey) {
+          requestCache.set(cacheKey, {
+            data: result,
+            timestamp: Date.now(),
+          });
+        }
+
+        resolve(result);
+      } catch (error) {
+        reject(error);
+      } finally {
+        activeRequests--;
+        // Process next request in queue
+        if (requestQueue.length > 0) {
+          const next = requestQueue.shift();
+          setTimeout(next.processRequest, 100); // Small delay between requests
+        }
+      }
+    };
+
+    processRequest();
+  });
+};
+
 const adminApi = axios.create({
   baseURL: `${BASE_URL}/api/v1/admin`,
   withCredentials: true,
+  timeout: 15000, // 15 second timeout
 });
 
 // Create a separate instance for product operations using regular routes
 const productApi = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
   withCredentials: true,
+  timeout: 15000, // 15 second timeout
 });
 
 // Request interceptor to add auth token for both instances
@@ -21,6 +80,20 @@ const addAuthInterceptor = (apiInstance) => {
     }
     return config;
   });
+
+  // Add response interceptor for rate limiting
+  apiInstance.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      if (error.response?.status === 429) {
+        console.warn("Rate limit exceeded, retrying after delay...");
+        // Wait 2 seconds and retry
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        return apiInstance.request(error.config);
+      }
+      return Promise.reject(error);
+    }
+  );
 };
 
 addAuthInterceptor(adminApi);
@@ -57,8 +130,9 @@ export const getDashboardStats = async () => {
 // Users Management
 export const getUsers = async () => {
   try {
-    const response = await adminApi.get("/users");
-    return response.data?.data || [];
+    // Use regular productApi for user routes as there's no separate admin/users route
+    const response = await productApi.get("/users");
+    return response.data?.users || response.data?.data || [];
   } catch (error) {
     console.error("Error fetching users:", error);
     throw error;
@@ -66,12 +140,17 @@ export const getUsers = async () => {
 };
 
 export const deleteUser = async (userId) => {
-  const response = await adminApi.delete(`/users/${userId}`);
+  const response = await productApi.delete(`/users/${userId}`);
+  return response.data;
+};
+
+export const createUser = async (userData) => {
+  const response = await productApi.post("/users", userData);
   return response.data;
 };
 
 export const updateUserRole = async (userId, role) => {
-  const response = await adminApi.patch(`/users/${userId}/role`, { role });
+  const response = await productApi.patch(`/users/${userId}/role`, { role });
   return response.data;
 };
 
@@ -122,10 +201,16 @@ export const updateOrderStatus = async (orderId, status) => {
   }
 };
 
-// Products Management - using regular product routes
+// Products Management - using regular product routes with throttling
 export const getProducts = async () => {
-  const response = await productApi.get("/products");
-  return response.data.data;
+  return throttleRequest(
+    async () => {
+      const response = await productApi.get("/products");
+      return response.data.data;
+    },
+    "products",
+    10000 // Cache for 10 seconds
+  );
 };
 
 export const createProduct = async (productData) => {
@@ -207,18 +292,28 @@ export const deleteProduct = async (productId) => {
   return response.data;
 };
 
-// Categories Management
+// Categories Management with throttling
 export const getCategories = async () => {
-  const response = await adminApi.get("/categories");
-  return response.data.data;
+  return throttleRequest(
+    async () => {
+      const response = await adminApi.get("/categories");
+      return response.data.data;
+    },
+    "categories",
+    30000 // Cache for 30 seconds
+  );
 };
 
 export const createCategory = async (categoryData) => {
+  // Clear cache after creating
+  requestCache.delete("categories");
   const response = await adminApi.post("/categories", categoryData);
   return response.data;
 };
 
 export const updateCategory = async (categoryId, categoryData) => {
+  // Clear cache after updating
+  requestCache.delete("categories");
   const response = await adminApi.patch(
     `/categories/${categoryId}`,
     categoryData
@@ -227,14 +322,22 @@ export const updateCategory = async (categoryId, categoryData) => {
 };
 
 export const deleteCategory = async (categoryId) => {
+  // Clear cache after deleting
+  requestCache.delete("categories");
   const response = await adminApi.delete(`/categories/${categoryId}`);
   return response.data;
 };
 
-// Brands Management
+// Brands Management with throttling
 export const getBrands = async () => {
-  const response = await productApi.get("/brands");
-  return response.data.data;
+  return throttleRequest(
+    async () => {
+      const response = await productApi.get("/brands");
+      return response.data.data;
+    },
+    "brands",
+    30000 // Cache for 30 seconds
+  );
 };
 
 export default adminApi;

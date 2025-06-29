@@ -5,8 +5,7 @@ import { UserContext } from "./UserContext";
 
 export const OrderContext = createContext();
 
-const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:8000/api/v1";
+const API_BASE_URL = "https://tech-shop-api-e0bd81e562d4.herokuapp.com/api/v1";
 const BASE_URL = `${API_BASE_URL}/orders`;
 
 export default function OrderContextProvider({ children }) {

@@ -18,7 +18,7 @@ export default function UserContextProvider(props) {
         // Check if token is not expired
         if (decoded.exp * 1000 > Date.now()) {
           setUserToken(token);
-          setUserData(JSON.parse(storedUserData));
+            setUserData(JSON.parse(storedUserData));
         } else {
           // Token expired, remove it
           localStorage.removeItem("userToken");
@@ -47,16 +47,16 @@ export default function UserContextProvider(props) {
   };
 
   return (
-    <UserContext.Provider
-      value={{
-        userToken,
-        userData,
-        setUserToken,
-        setUserLogin,
-        logout,
-      }}
-    >
-      {props.children}
-    </UserContext.Provider>
+      <UserContext.Provider
+        value={{
+          userToken,
+          userData,
+          setUserToken,
+          setUserLogin,
+          logout,
+        }}
+      >
+        {props.children}
+      </UserContext.Provider>
   );
 }

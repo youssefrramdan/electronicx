@@ -12,7 +12,7 @@ export default function WishContextProvider({ children }) {
   const { userToken } = useContext(UserContext);
 
   const API_BASE_URL =
-    process.env.REACT_APP_API_BASE_URL || "http://localhost:8000/api/v1";
+    "https://tech-shop-api-e0bd81e562d4.herokuapp.com/api/v1";
 
   // Get user wishlist
   const getWishlist = async () => {
@@ -20,11 +20,20 @@ export default function WishContextProvider({ children }) {
 
     try {
       setLoading(true);
-      const { data } = await axios.get(`${API_BASE_URL}/wishlist`);
+      const { data } = await axios.get(`${API_BASE_URL}/wishlist`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
 
       if (data.status === "success") {
-        setWishlist(data.data.wishlist);
-        setWishlistCount(data.results);
+        const wishlistData = data.data.wishlist || [];
+        // Filter out any invalid items
+        const validWishlist = wishlistData.filter(
+          (item) => item && item.product && item.product._id
+        );
+        setWishlist(validWishlist);
+        setWishlistCount(validWishlist.length);
       }
     } catch (error) {
       console.error("Error fetching wishlist:", error);
@@ -42,9 +51,15 @@ export default function WishContextProvider({ children }) {
     }
 
     try {
-      const { data } = await axios.post(`${API_BASE_URL}/wishlist`, {
-        productId,
-      });
+      const { data } = await axios.post(
+        `${API_BASE_URL}/wishlist`,
+        { productId },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
 
       if (data.status === "success") {
         await getWishlist(); // Refresh wishlist
@@ -67,7 +82,12 @@ export default function WishContextProvider({ children }) {
 
     try {
       const { data } = await axios.delete(
-        `${API_BASE_URL}/wishlist/${productId}`
+        `${API_BASE_URL}/wishlist/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
       );
 
       if (data.status === "success") {
@@ -90,7 +110,11 @@ export default function WishContextProvider({ children }) {
     if (!userToken) return false;
 
     try {
-      const { data } = await axios.delete(`${API_BASE_URL}/wishlist`);
+      const { data } = await axios.delete(`${API_BASE_URL}/wishlist`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
 
       if (data.status === "success") {
         setWishlist([]);
@@ -107,7 +131,10 @@ export default function WishContextProvider({ children }) {
 
   // Check if product is in wishlist
   const isInWishlist = (productId) => {
-    return wishlist.some((item) => item.product._id === productId);
+    if (!wishlist || !Array.isArray(wishlist)) return false;
+    return wishlist.some(
+      (item) => item && item.product && item.product._id === productId
+    );
   };
 
   // Toggle product in wishlist

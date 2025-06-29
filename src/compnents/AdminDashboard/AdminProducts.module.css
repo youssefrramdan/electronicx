@@ -777,15 +777,185 @@
   color: #333;
 }
 
-/* Read-only Input */
-.readOnlyInput {
-  background-color: #f8f9fa !important;
-  color: #6c757d !important;
-  cursor: not-allowed !important;
-  border: 1px solid #e9ecef !important;
+/* Rental Styles */
+.rentalSection {
+  background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 2px solid rgba(76, 175, 80, 0.2);
+  position: relative;
+  overflow: hidden;
 }
 
-.readOnlyInput::placeholder {
-  color: #adb5bd !important;
-  font-style: italic;
+.rentalSection::before {
+  content: "🏠";
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 1.5rem;
+  opacity: 0.3;
+}
+
+.checkboxLabel {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  cursor: pointer;
+  font-weight: 600 !important;
+  color: #2e7d32 !important;
+  padding: 8px 0;
+  margin-bottom: 0 !important;
+  transition: all 0.3s ease;
+}
+
+.checkboxLabel:hover {
+  transform: translateX(4px);
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+  cursor: pointer;
+  accent-color: #4caf50;
+}
+
+.checkboxLabel input[type="checkbox"]:checked {
+  background: #4caf50;
+}
+
+.rentalFields {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(76, 175, 80, 0.3);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rentalFields .formGroup label {
+  color: #2e7d32 !important;
+  font-weight: 600;
+}
+
+.rentalFields .formGroup input {
+  border: 2px solid rgba(76, 175, 80, 0.3) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+}
+
+.rentalFields .formGroup input:focus {
+  border-color: #4caf50 !important;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1) !important;
+}
+
+.rentalBadge {
+  position: absolute;
+  top: 50px;
+  right: 12px;
+  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 15px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(76, 175, 80, 0.3);
+  z-index: 3;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.rentalInfo {
+  background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rentalInfo > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rentalInfo .label {
+  font-size: 0.75rem;
+  color: #2e7d32;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rentalInfo .value {
+  font-size: 0.8rem;
+  color: #1b5e20;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rentalInfo .value svg {
+  font-size: 0.7rem;
+  color: #4caf50;
+}
+
+.rentalPrice {
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+  padding-bottom: 6px;
+}
+
+.rentalDeposit,
+.rentalStock {
+  font-size: 0.85rem;
+}
+
+/* Responsive rental styles */
+@media (max-width: 768px) {
+  .rentalSection {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  .rentalFields .formRow {
+    flex-direction: column;
+  }
+
+  .rentalInfo {
+    padding: 8px;
+  }
+
+  .rentalInfo > div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .rentalBadge {
+    position: static;
+    margin: 4px 0;
+    align-self: flex-start;
+  }
 }

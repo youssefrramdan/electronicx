@@ -106,6 +106,13 @@ export default function Wishlist() {
                     </div>
                   )}
 
+                  {product.isRentable && (
+                    <div className={Style.rentalBadge}>
+                      <i className="fas fa-calendar-check"></i>
+                      RENT
+                    </div>
+                  )}
+
                   <button
                     className={Style.removeBtn}
                     onClick={() => handleRemoveFromWishlist(product._id)}

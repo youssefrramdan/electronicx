@@ -355,97 +355,114 @@ export default function Product() {
               </div>
             ) : (
               <div className={Style.productsGrid}>
-                {products.map((product) => (
-                  <div className={Style.productCard} key={product._id}>
-                    <div className={Style.productImageContainer}>
-                      <Link to={`/productdetails/${product._id}`}>
-                        <img
-                          src={product.imageCover}
-                          className={Style.productImage}
-                          alt={product.name}
-                        />
-                      </Link>
+                {products
+                  .filter((product) => product && product._id)
+                  .map((product) => (
+                    <div className={Style.productCard} key={product._id}>
+                      <div className={Style.productImageContainer}>
+                        <Link to={`/productdetails/${product._id}`}>
+                          <img
+                            src={product.imageCover}
+                            className={Style.productImage}
+                            alt={product.name || product.title}
+                          />
+                        </Link>
 
-                      <button
-                        className={`${Style.wishlistBtn} ${
-                          isInWishlist(product._id) ? Style.inWishlist : ""
-                        }`}
-                        onClick={() => handleWishlistToggle(product._id)}
-                        title={
-                          isInWishlist(product._id)
-                            ? "Remove from Wishlist"
-                            : "Add to Wishlist"
-                        }
-                      >
-                        <i className="fas fa-heart"></i>
-                      </button>
+                        <button
+                          className={`${Style.wishlistBtn} ${
+                            product._id && isInWishlist(product._id)
+                              ? Style.inWishlist
+                              : ""
+                          }`}
+                          onClick={() =>
+                            product._id && handleWishlistToggle(product._id)
+                          }
+                          title={
+                            product._id && isInWishlist(product._id)
+                              ? "Remove from Wishlist"
+                              : "Add to Wishlist"
+                          }
+                        >
+                          <i className="fas fa-heart"></i>
+                        </button>
 
-                      {product.priceAfterDiscount && (
-                        <div className={Style.discountBadge}>
-                          {Math.round(
-                            ((product.price - product.priceAfterDiscount) /
-                              product.price) *
-                              100
-                          )}
-                          % OFF
-                        </div>
-                      )}
-                    </div>
+                        {product.priceAfterDiscount && (
+                          <div className={Style.discountBadge}>
+                            {Math.round(
+                              ((product.price - product.priceAfterDiscount) /
+                                product.price) *
+                                100
+                            )}
+                            % OFF
+                          </div>
+                        )}
 
-                    <div className={Style.productInfo}>
-                      <div className={Style.productCategory}>
-                        {product.category?.name || "Uncategorized"}
+                        {product.isRentable && (
+                          <div className={Style.rentalBadge}>
+                            <i className="fas fa-calendar-check"></i>
+                            RENT
+                          </div>
+                        )}
                       </div>
 
-                      <Link
-                        to={`/productdetails/${product._id}`}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <h3 className={Style.productName}>{product.name}</h3>
-                      </Link>
+                      <div className={Style.productInfo}>
+                        <div className={Style.productCategory}>
+                          {product.category?.name || "Uncategorized"}
+                        </div>
 
-                      <div className={Style.productDetails}>
-                        <div className={Style.productPrice}>
-                          {product.priceAfterDiscount ? (
-                            <>
-                              <div className="originalPrice">
-                                {product.price} EGP
-                              </div>
+                        <Link
+                          to={`/productdetails/${product._id}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <h3 className={Style.productName}>
+                            {product.name || product.title}
+                          </h3>
+                        </Link>
+
+                        <div className={Style.productDetails}>
+                          <div className={Style.productPrice}>
+                            {product.priceAfterDiscount ? (
+                              <>
+                                <div className="currentPrice">
+                                  {product.priceAfterDiscount} EGP
+                                </div>
+                                <div className="originalPrice">
+                                  {product.price} EGP
+                                </div>
+                              </>
+                            ) : (
                               <div className="currentPrice">
-                                {product.priceAfterDiscount} EGP
+                                {product.price || 0} EGP
                               </div>
+                            )}
+                          </div>
+
+                          <div className={Style.productRating}>
+                            <i className="fas fa-star"></i>
+                            <span>{product.ratingsAverage || 0}</span>
+                          </div>
+                        </div>
+
+                        <button
+                          className={Style.addToCartBtn}
+                          onClick={() => product._id && addProduct(product._id)}
+                          disabled={product.stock === 0 || !product._id}
+                        >
+                          {product.stock === 0 ? (
+                            <>
+                              <i className="fas fa-times-circle"></i> Out of
+                              Stock
                             </>
                           ) : (
-                            <div className="currentPrice">
-                              {product.price} EGP
-                            </div>
+                            <>
+                              <i className="fas fa-shopping-cart"></i> Add to
+                              Cart
+                            </>
                           )}
-                        </div>
-
-                        <div className={Style.productRating}>
-                          <i className="fas fa-star"></i>
-                          <span>{product.ratingsAverage || 0}</span>
-                        </div>
+                        </button>
                       </div>
-
-                      <button
-                        className={Style.addToCartBtn}
-                        onClick={() => addProduct(product._id)}
-                        disabled={product.stock === 0}
-                      >
-                        {product.stock === 0 ? (
-                          <>
-                            <i className="fas fa-times-circle"></i> Out of Stock
-                          </>
-                        ) : (
-                          <>
-                            <i className="fas fa-shopping-cart"></i> Add to Cart
-                          </>
-                        )}
-                      </button>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             )}
           </div>
