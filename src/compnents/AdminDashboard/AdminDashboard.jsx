@@ -96,7 +96,6 @@ export default function AdminDashboard() {
             <div className={Style.headerActions}>
               <button className={Style.notificationBtn}>
                 <i className="fas fa-bell"></i>
-                <span className={Style.notificationBadge}>3</span>
               </button>
               <div className={Style.adminProfile}>
                 <i className="fas fa-user-circle"></i>

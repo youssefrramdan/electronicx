@@ -34,6 +34,7 @@ import AdminCategories from "./compnents/AdminDashboard/AdminCategories";
 import AdminOrders from "./compnents/AdminDashboard/AdminOrders";
 import AdminUsers from "./compnents/AdminDashboard/AdminUsers";
 import AdminRentals from "./compnents/AdminDashboard/AdminRentals";
+import AdminBrands from "./compnents/AdminDashboard/AdminBrands";
 import { Navigate } from "react-router-dom";
 import RentalRequest from "./compnents/RentalRequest/RentalRequest";
 import MyRentals from "./compnents/MyRentals/MyRentals";
@@ -216,6 +217,10 @@ let router = createBrowserRouter([
       {
         path: "rentals",
         element: <AdminRentals />,
+      },
+      {
+        path: "brands",
+        element: <AdminBrands />,
       },
     ],
   },
