@@ -11,7 +11,7 @@ export default function Brands() {
   async function getAllBrands() {
     try {
       let response = await axios.get(
-        "https://tech-shop-api-e0bd81e562d4.herokuapp.com/api/v1/brand"
+        "https://tech-shop-api-e0bd81e562d4.herokuapp.com/api/v1/brands"
       );
       return response.data;
     } catch (error) {
@@ -98,14 +98,18 @@ export default function Brands() {
             {filteredBrands.map((brand) => (
               <div key={brand._id} className={Style.brandCard}>
                 <div className={Style.brandImageContainer}>
-                  <img
-                    src={
-                      brand.image ||
-                      "https://via.placeholder.com/150x100?text=No+Image"
-                    }
-                    alt={brand.name}
-                    className={Style.brandImage}
-                  />
+                  {brand.logo ? (
+                    <img
+                      src={brand.logo}
+                      alt={brand.name}
+                      className={Style.brandImage}
+                    />
+                  ) : (
+                    <div className={Style.noImagePlaceholder}>
+                      <i className="fas fa-image"></i>
+                      <span>{brand.name}</span>
+                    </div>
+                  )}
                   <div className={Style.brandOverlay}>
                     <i className="fas fa-eye"></i>
                   </div>
