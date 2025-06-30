@@ -66,6 +66,10 @@ export default function AdminDashboard() {
             <i className="fas fa-users"></i>
             <span>Users</span>
           </Link>
+          <Link to="/admin/rentals" className={Style.navItem}>
+            <i className="fas fa-calendar-alt"></i>
+            <span>Rentals</span>
+          </Link>
           <Link to="/admin/brands" className={Style.navItem}>
             <i className="fas fa-copyright"></i>
             <span>Brands</span>

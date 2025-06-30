@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getDashboardStats } from "../../services/adminApi";
+import rentalApi from "../../services/rentalApi";
 import styles from "./DashboardOverview.module.css";
 import {
   FaBox,
@@ -9,6 +10,9 @@ import {
   FaTag,
   FaBoxes,
   FaPercent,
+  FaCalendarAlt,
+  FaClock,
+  FaCheckCircle,
 } from "react-icons/fa";
 
 const DashboardOverview = () => {
@@ -25,6 +29,14 @@ const DashboardOverview = () => {
       topProducts: [],
       lowStock: 0,
     },
+    rentals: {
+      total: 0,
+      pending: 0,
+      approved: 0,
+      active: 0,
+      completed: 0,
+      rejected: 0,
+    },
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,8 +44,31 @@ const DashboardOverview = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const data = await getDashboardStats();
-        setStats(data);
+        const [dashboardData, rentalStats] = await Promise.all([
+          getDashboardStats(),
+          rentalApi.getRentalStats().catch(() => ({
+            data: {
+              total: 0,
+              pending: 0,
+              approved: 0,
+              active: 0,
+              completed: 0,
+              rejected: 0,
+            },
+          })),
+        ]);
+
+        setStats({
+          ...dashboardData,
+          rentals: rentalStats.data || {
+            total: 0,
+            pending: 0,
+            approved: 0,
+            active: 0,
+            completed: 0,
+            rejected: 0,
+          },
+        });
       } catch (err) {
         setError(err.message);
       } finally {
@@ -102,6 +137,36 @@ const DashboardOverview = () => {
           <div className={styles.statInfo}>
             <h3>Low Stock</h3>
             <p>{stats.products.lowStock} products</p>
+          </div>
+        </div>
+
+        <div className={styles.statCard}>
+          <div className={styles.statIcon}>
+            <FaCalendarAlt />
+          </div>
+          <div className={styles.statInfo}>
+            <h3>Total Rentals</h3>
+            <p>{stats.rentals.total}</p>
+          </div>
+        </div>
+
+        <div className={styles.statCard}>
+          <div className={styles.statIcon}>
+            <FaClock />
+          </div>
+          <div className={styles.statInfo}>
+            <h3>Pending Rentals</h3>
+            <p>{stats.rentals.pending}</p>
+          </div>
+        </div>
+
+        <div className={styles.statCard}>
+          <div className={styles.statIcon}>
+            <FaCheckCircle />
+          </div>
+          <div className={styles.statInfo}>
+            <h3>Active Rentals</h3>
+            <p>{stats.rentals.active}</p>
           </div>
         </div>
       </div>

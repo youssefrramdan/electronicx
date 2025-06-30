@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Style from "./ProductDetails.module.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "react-query";
 import Slider from "react-slick";
@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function ProductDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
   const { toggleWishlist, isInWishlist } = useContext(WishContext);
   const [mainSlider, setMainSlider] = useState(null);
@@ -269,7 +270,7 @@ export default function ProductDetails() {
                 {product.isRentable && (
                   <button
                     className={Style.rentBtn}
-                    onClick={() => alert("Rental feature coming soon!")}
+                    onClick={() => navigate(`/rent-product/${product._id}`)}
                     disabled={!product.rentalStock && !product.stock}
                   >
                     <i className="fas fa-calendar-check"></i>

@@ -33,7 +33,11 @@ import AdminProducts from "./compnents/AdminDashboard/AdminProducts";
 import AdminCategories from "./compnents/AdminDashboard/AdminCategories";
 import AdminOrders from "./compnents/AdminDashboard/AdminOrders";
 import AdminUsers from "./compnents/AdminDashboard/AdminUsers";
+import AdminRentals from "./compnents/AdminDashboard/AdminRentals";
 import { Navigate } from "react-router-dom";
+import RentalRequest from "./compnents/RentalRequest/RentalRequest";
+import MyRentals from "./compnents/MyRentals/MyRentals";
+import RentalDetails from "./compnents/RentalDetails/RentalDetails";
 
 // Set up axios interceptor to automatically add authorization header
 axios.interceptors.request.use((config) => {
@@ -154,6 +158,30 @@ let router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "rent-product/:productId",
+        element: (
+          <ProtectedRoute>
+            <RentalRequest />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "my-rentals",
+        element: (
+          <ProtectedRoute>
+            <MyRentals />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "rental-details/:rentalId",
+        element: (
+          <ProtectedRoute>
+            <RentalDetails />
+          </ProtectedRoute>
+        ),
+      },
       { path: "*", element: <Notfound /> },
     ],
   },
@@ -184,6 +212,10 @@ let router = createBrowserRouter([
       {
         path: "users",
         element: <AdminUsers />,
+      },
+      {
+        path: "rentals",
+        element: <AdminRentals />,
       },
     ],
   },

@@ -75,6 +75,13 @@ export default function Navbar() {
               </Link>
             )}
 
+            {userToken && (
+              <Link to="/my-rentals" className={Style.navLink}>
+                <i className="fas fa-calendar-alt"></i>
+                <span>My Rentals</span>
+              </Link>
+            )}
+
             {userToken ? (
               <div className={Style.userSection}>
                 {userData?.name && (

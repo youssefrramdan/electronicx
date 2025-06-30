@@ -1,0 +1,644 @@
+/* Container */
+.rentalDetails {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px 0;
+  direction: ltr;
+  font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.backButton {
+  background: #feee00;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.backButton:hover {
+  background: #e6d500;
+  transform: translateY(-2px);
+}
+
+.titleSection {
+  flex: 1;
+  text-align: center;
+}
+
+.titleSection h1 {
+  margin: 0 0 8px 0;
+  color: #2c3e50;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.titleSection p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+  font-family: monospace;
+}
+
+/* Status */
+.status {
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusPending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.statusApproved {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.statusRejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.statusActive {
+  background: #d4edda;
+  color: #155724;
+}
+
+.statusCompleted {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.statusCancelled {
+  background: #f5c6cb;
+  color: #721c24;
+}
+
+/* Content */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Section */
+.section {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+  margin: 0 0 25px 0;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #feee00;
+}
+
+.section h2 i {
+  color: #feee00;
+  font-size: 1.3rem;
+}
+
+/* Product Card */
+.productCard {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.productImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  flex-shrink: 0;
+}
+
+.productImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 10px;
+}
+
+.productInfo h3 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.productMeta {
+  display: flex;
+  gap: 30px;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.metaItem .label {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.metaItem .value {
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Info Grid */
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.infoItem {
+  background: #f8f9fa;
+  padding: 16px 20px;
+  border-radius: 8px;
+  border-left: 4px solid #feee00;
+  transition: all 0.3s ease;
+}
+
+.infoItem:hover {
+  background: #e9ecef;
+  transform: translateY(-1px);
+}
+
+.infoItem .label {
+  color: #666;
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.infoItem .value {
+  color: #2c3e50;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: block;
+}
+
+/* ID Images */
+.idImages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.idImageCard {
+  text-align: center;
+}
+
+.idImageCard h4 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.idImage {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f9fa;
+  border: 2px solid #e1e8ed;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.idImage:hover {
+  border-color: #feee00;
+  transform: scale(1.02);
+}
+
+.idImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Rental Info */
+.rentalInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.dateRange,
+.pricing {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.dateItem,
+.priceItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.dateItem:last-child,
+.priceItem:last-child {
+  border-bottom: none;
+}
+
+.priceItem.total {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin: 15px -20px -20px -20px;
+  padding: 20px;
+  border-radius: 0 0 8px 8px;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.dateItem .label,
+.priceItem .label {
+  color: #666;
+  font-weight: 500;
+}
+
+.dateItem .value,
+.priceItem .value {
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+.priceItem.total .label,
+.priceItem.total .value {
+  color: white;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-right: 30px;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  right: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e1e8ed;
+}
+
+.timelineItem {
+  position: relative;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.timelineIcon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #feee00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2c3e50;
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 2;
+  position: relative;
+}
+
+.timelineContent {
+  flex: 1;
+  background: #f8f9fa;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-top: -5px;
+}
+
+.timelineContent h4 {
+  margin: 0 0 8px 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.timelineContent p {
+  margin: 0 0 5px 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.timelineContent small {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+/* Return Info */
+.returnInfo {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.returnItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.returnItem:last-child {
+  border-bottom: none;
+}
+
+.returnItem .label {
+  color: #666;
+  font-weight: 500;
+}
+
+.returnItem .value {
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+.returnItem .value.condition {
+  padding: 5px 12px;
+  border-radius: 15px;
+  background: #d4edda;
+  color: #155724;
+  font-size: 0.9rem;
+}
+
+/* Admin Notes */
+.adminNotes {
+  background: #fff3cd;
+  padding: 20px;
+  border-radius: 8px;
+  border-right: 4px solid #ffc107;
+}
+
+.adminNotes p {
+  margin: 0;
+  color: #856404;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Loading & Error States */
+.loading,
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.loading p,
+.error h2 {
+  margin: 20px 0 0 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.error button {
+  background: #feee00;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.error button:hover {
+  background: #e6d500;
+}
+
+/* Spinner */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #feee00;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .rentalInfo {
+    grid-template-columns: 1fr;
+  }
+
+  .productMeta {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .titleSection h1 {
+    font-size: 1.6rem;
+  }
+
+  .section {
+    padding: 20px;
+  }
+
+  .section h2 {
+    font-size: 1.3rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .productCard {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .productImage {
+    width: 100px;
+    height: 100px;
+    align-self: center;
+  }
+
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .infoItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .infoItem .value {
+    text-align: right;
+  }
+
+  .idImages {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline {
+    padding-right: 20px;
+  }
+
+  .timeline::before {
+    right: 10px;
+  }
+
+  .timelineIcon {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  .timelineItem {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rentalDetails {
+    padding: 10px 0;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .titleSection h1 {
+    font-size: 1.4rem;
+  }
+
+  .titleSection p {
+    font-size: 0.8rem;
+  }
+
+  .section {
+    padding: 15px;
+  }
+
+  .section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .productCard {
+    padding: 15px;
+  }
+
+  .productImage {
+    width: 80px;
+    height: 80px;
+  }
+
+  .productInfo h3 {
+    font-size: 1.1rem;
+  }
+
+  .metaItem .value {
+    font-size: 1rem;
+  }
+
+  .status {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .idImage {
+    height: 150px;
+  }
+
+  .timelineContent {
+    padding: 12px 15px;
+  }
+
+  .timelineContent h4 {
+    font-size: 1rem;
+  }
+}
